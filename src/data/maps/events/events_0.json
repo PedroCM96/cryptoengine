@@ -1,0 +1,16 @@
+[
+  {
+    "id": 0,
+    "trigger": "COLLISION",
+    "script": [
+      {
+        "showMessage": "¡Hola mundo!"
+      },
+      {
+        "showMessage": "¿Qué tal?"
+      }
+    ],
+    "allowMove": false,
+    "permanent": true
+  }
+]
