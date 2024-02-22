@@ -4,10 +4,18 @@
     "trigger": "COLLISION",
     "script": [
       {
-        "showMessage": "¡Hola mundo!"
-      },
+        "showMessage": "Casa súper guapa"
+      }
+    ],
+    "allowMove": false,
+    "permanent": true
+  },
+  {
+    "id": 1,
+    "trigger": "COLLISION",
+    "script": [
       {
-        "showMessage": "¿Qué tal?"
+        "showMessage": "Casa de gays"
       }
     ],
     "allowMove": false,

@@ -1,15 +1,46 @@
 import {Position} from "../types";
-import {Direction} from "../input";
+import {Direction, getInputDirection} from "../input";
+import {Global} from "../Global.ts";
+import {
+    CELL_SIZE,
+    CHARACTER_ANIMATION_MAP,
+    CHARACTER_ANIMATION_SPEED,
+    CHARACTER_HEIGHT,
+    CHARACTER_WIDTH
+} from "../config.ts";
+import {Animable} from "../animation";
 
-export class Character {
-    private position: Position;
-    private lookingAt: Direction;
-    private canMove: boolean;
+export class Character extends Animable {
+    directionToYOffset: Record<Direction, number> = {
+        [Direction.DOWN]: 0,
+        [Direction.LEFT]: -48,
+        [Direction.RIGHT]: -96,
+        [Direction.UP]: -146
+    }
 
-    constructor() {
-        this.position = {x: 1, y: 1};
+    private position: Position; // Current position of the character in the map.
+    private lookingAt: Direction; // If character is looking up, looking down...
+    private canMove: boolean; // If character can move after press a direction input. For example, when a TextBox is opened.
+    private isMoving: boolean; // If the character is currently moving.
+    private moveInProgress: boolean; // If the character has a movement between cells pending.
+
+    constructor(img: HTMLImageElement) {
+        super(CHARACTER_ANIMATION_MAP, img, CHARACTER_ANIMATION_SPEED);
+        this.position = {x: 15, y: 7};
         this.canMove = true;
         this.lookingAt = Direction.DOWN;
+        this.isMoving = false;
+        this.moveInProgress = false;
+    }
+
+    move(direction: Direction): boolean {
+        if (!this.canMove || this.moveInProgress) {
+            return false;
+        }
+
+        this.position = this.getNextPosition(direction);
+        this.lookingAt = direction;
+        return true;
     }
 
     enableMovement(): void {
@@ -18,6 +49,17 @@ export class Character {
 
     disableMovement(): void {
         this.canMove = false;
+    }
+
+    render(global: Global): void {
+        this.isMoving = !!getInputDirection(global.inputState);
+        const animatedCharacter = this.getAnimatedCharacter();
+        const ctx = global.ctx;
+        ctx.drawImage(
+            animatedCharacter,
+            ctx.canvas.width / 2 - CHARACTER_WIDTH / 2 - (CELL_SIZE / 2),
+            ctx.canvas.height / 2 - CHARACTER_HEIGHT / 2 - (CELL_SIZE / 2)
+        );
     }
 
     getNextPosition(direction: Direction): Position {
@@ -49,21 +91,42 @@ export class Character {
         }
     }
 
-    move(direction: Direction): boolean {
-        if (!this.canMove) {
-            return false;
-        }
-
-       this.position = this.getNextPosition(direction);
-       this.lookingAt = direction;
-       return true;
-    }
-
     getPosition(): Position {
         return this.position;
     }
 
+    lookAt(direction: Direction): void {
+        this.lookingAt = direction;
+    }
+
     isLookingAt(direction: Direction): boolean {
         return this.lookingAt === direction;
+    }
+
+    public startMove(): void {
+        this.moveInProgress = true;
+    }
+
+    public finishMove(): void {
+        this.moveInProgress = false;
+    }
+    private getAnimatedCharacter(): HTMLCanvasElement {
+        const canvas = document.createElement('canvas');
+        canvas.height = CHARACTER_HEIGHT;
+        canvas.width = CHARACTER_WIDTH;
+        const ctx2 = canvas.getContext('2d') as CanvasRenderingContext2D;
+        ctx2.clearRect(0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT);
+
+        let animationOffset = 0;
+
+        if (this.isMoving) {
+            animationOffset = this.getCurrentOffset();
+            this.nextFrame();
+        } else {
+            this.resetAnimation();
+        }
+        ctx2.drawImage(this.img, animationOffset, this.directionToYOffset[this.lookingAt]);
+        this.nextFrame();
+        return ctx2.canvas;
     }
 }

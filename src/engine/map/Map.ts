@@ -1,13 +1,20 @@
-import {CELL_SIZE, CHARACTER_RESOURCE, MAP_RESOURCE_EXTENSION, MAP_RESOURCE_PREFIX} from "../config.ts";
+import {MAP_RESOURCE_EXTENSION, MAP_RESOURCE_PREFIX} from "../config.ts";
 import {MapData} from "./MapData.ts";
 import {Position, positionToString} from "../types";
 import {loadDataFromJson} from "./loadDataFromJson.ts";
 import {Event} from "../event";
 import {Global} from "../Global.ts";
+import {Camera} from "./camera";
 
 export class Map {
 
-    constructor(private readonly id: number, private readonly data: MapData) {}
+    private readonly camera: Camera;
+    private readonly img: HTMLImageElement;
+    constructor(private readonly id: number, private readonly data: MapData) {
+        this.img = new Image();
+        this.img.src = `${MAP_RESOURCE_PREFIX}${this.id}.${MAP_RESOURCE_EXTENSION}`;
+        this.camera = new Camera({x: 0, y: 0});
+    }
 
     static async fromId(id: number): Promise<Map> {
         const data = await loadDataFromJson(id);
@@ -15,22 +22,7 @@ export class Map {
     }
 
     render(global: Global) {
-        const ctx = global.ctx;
-        const character = global.character;
-
-        const map = new Image();
-        map.src = `${MAP_RESOURCE_PREFIX}${this.id}.${MAP_RESOURCE_EXTENSION}`;
-        const char = new Image();
-        char.src = CHARACTER_RESOURCE;
-
-        let characterPositionX = character.getPosition().x * CELL_SIZE;
-        let characterPositionY = character.getPosition().y * CELL_SIZE;
-
-        const cameraX = characterPositionX - ctx.canvas.width / (2);
-        const cameraY = characterPositionY - ctx.canvas.height / (2);
-
-        ctx.drawImage(map, -cameraX, -cameraY);
-        ctx.drawImage(char, (ctx.canvas.width / 2 - char.width / 2 - (CELL_SIZE / 2)), (ctx.canvas.height / 2 - char.height / 2 - (CELL_SIZE / 2)));
+        this.camera.render(this.img, global.character, global.ctx);
     }
 
     willCollide(position: Position): boolean {

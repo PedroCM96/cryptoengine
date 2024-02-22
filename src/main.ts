@@ -1,5 +1,6 @@
 import './style.css'
 import {
+    CHARACTER_RESOURCE,
     GAME_CANVAS_SIZE,
     initUI,
     KEYBOARD_INPUT_MAP,
@@ -37,7 +38,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     map = await Map.fromId(0); // Hardcoded ID 0
     inputState = initInputState(KEYBOARD_INPUT_MAP);
     ui = initUI();
-    character = new Character();
+    const characterImg = new Image();
+    characterImg.src = CHARACTER_RESOURCE;
+    character = new Character(characterImg);
 
     // UI Adjustments
     const textbox = document.getElementById('textbox') as HTMLElement;
@@ -57,10 +60,11 @@ document.addEventListener("keydown", (e) => {
     inputDetection(inputState, KEYBOARD_INPUT_MAP, e.code);
 });
 
+document.addEventListener("keyup", () => resetInputState(inputState as InputState));
+
 let secondsPassed;
 let oldTimeStamp = 0;
 let fps;
-
 
  async function gameLoop(timestamp: number)  {
      /** FPS Issues **/
@@ -77,7 +81,7 @@ let fps;
 
      const global = new Global(ctx, inputState, character, map, ui);
      await process(global);
-     resetInputState(inputState);
      window.requestAnimationFrame(gameLoop);
+
  }
 

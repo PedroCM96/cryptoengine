@@ -20,3 +20,8 @@ export function resetInputState(inputState: &InputState) {
         inputState[key as keyof InputMap] = false;
     }
 }
+
+export function resetActionButtons(inputState: InputState) {
+    inputState.CANCEL = false;
+    inputState.ACCEPT = false;
+}

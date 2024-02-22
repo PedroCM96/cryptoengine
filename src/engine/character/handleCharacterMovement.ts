@@ -8,6 +8,8 @@ export function handleCharacterMovement(global: Global): boolean  {
         const direction: Direction = getInputDirection(inputState) as Direction;
         if (!global.map.willCollide(global.character.getNextPosition(direction))) {
             return global.character.move(getInputDirection(inputState) as Direction);
+        } else {
+            global.character.lookAt(direction);
         }
     }
 

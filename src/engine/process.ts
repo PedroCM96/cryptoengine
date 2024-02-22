@@ -2,13 +2,14 @@ import {Global} from "./Global.ts";
 import {handleCharacterMovement} from "./character";
 import {handleEvents} from "./event";
 import {handleUI} from "./ui";
+import {resetActionButtons} from "./input";
 
 export async function process(global: Global): Promise<void>
 {
-
     // Render map with character
     global.map.render(global);
 
+    global.character.render(global);
     // Handle character's movement
     const hasMoved = handleCharacterMovement(global);
 
@@ -22,6 +23,8 @@ export async function process(global: Global): Promise<void>
 
     // Handle UI
     await handleUI(global);
+
+    resetActionButtons(global.inputState);
 }
 
 
