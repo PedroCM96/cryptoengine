@@ -1,8 +1,8 @@
-import {triggerFromString} from "./Trigger.ts";
-import {Script} from "./Script.ts";
-import {Event} from "./Event.ts";
-import {loadAction} from "./actions";
-import {Action} from "./Action.ts";
+import {triggerFromString} from "../Trigger.ts";
+import {Script} from "../Script.ts";
+import {Event} from "../Event.ts";
+import {loadAction} from "../actions";
+import {Action} from "../Action.ts";
 
 export async function loadEventFromJson(data: any): Promise<Event> {
 
@@ -14,7 +14,7 @@ export async function loadEventFromJson(data: any): Promise<Event> {
     const actions: Action[] = [];
     for (const action of data.script) {
         if (Object.keys(action).length > 1) {
-            throw new Error('Invalid events json. Each event should have just one root key');
+            throw new Error('Invalid events json. Each event action should have just one root key');
         }
 
         const rootKey = Object.keys(action)[0];

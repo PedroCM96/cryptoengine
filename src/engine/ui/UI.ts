@@ -1,4 +1,4 @@
-import {TextBox} from "./textbox.ts";
+import {TextBox} from "./elements/textbox.ts";
 import {TEXTBOX_HEIGHT, TEXTBOX_WIDTH} from "../config.ts";
 
 export class UI {

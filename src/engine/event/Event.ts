@@ -32,12 +32,16 @@ export  class Event {
     }
 
     isEnabled(): boolean {
-        return this.script.actions.filter((a) => a.isEnabled).length > 0
+        return this.script.getActions().filter((a) => a.isEnabled).length > 0
     }
 
     restore(): void {
-        for (const action of this.script.actions) {
+        for (const action of this.script.getActions()) {
             action.enable();
         }
+    }
+
+    isRunning(): boolean {
+        return this.script.isCurrentlyRunning();
     }
 }

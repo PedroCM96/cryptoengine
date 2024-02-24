@@ -37,6 +37,6 @@ export const MAP_RESOURCE_EXTENSION: string = 'jpeg';
 // UI
 export const TEXTBOX_HEIGHT = 60;
 export const TEXTBOX_WIDTH = 500;
-export const TEXTBOX_BORDER_RADIUS = 8
+export const TEXTBOX_BORDER_RADIUS = 8;
 export const TEXTBOX_PADDING = 8;
 

@@ -1,3 +1,3 @@
 export * from './Character';
-export * from './shouldMoveCharacter';
-export * from './handleCharacterMovement';
+export * from './functions/shouldMoveCharacter.ts';
+export * from './functions/handleCharacterMovement.ts';

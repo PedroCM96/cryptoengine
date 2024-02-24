@@ -1,12 +1,12 @@
-import {Position} from "../../types";
+import {Position} from "../../shared";
 import {Character} from "../../character";
 import {CELL_SIZE, CHARACTER_SPEED} from "../../config.ts";
 
 export class Camera {
     constructor(private  position: Position) {}
-    calculatePositionByCharacter(character: Character, canvas: HTMLCanvasElement): Position {
-        let characterPositionX = character.getPosition().x * CELL_SIZE;
-        let characterPositionY = character.getPosition().y * CELL_SIZE;
+    calculatePosition(position: Position, canvas: HTMLCanvasElement): Position {
+        let characterPositionX = position.x * CELL_SIZE;
+        let characterPositionY = position.y * CELL_SIZE;
 
         const x = -(characterPositionX - canvas.width / (2));
         const y = -(characterPositionY - canvas.height / (2));
@@ -15,7 +15,7 @@ export class Camera {
     }
 
     render(mapImage: HTMLImageElement, character: Character, ctx: CanvasRenderingContext2D): void {
-        const targetPosition = this.calculatePositionByCharacter(character, ctx.canvas);
+        const targetPosition = this.calculatePosition(character.getPosition(), ctx.canvas);
 
         if (!this.shouldSmooth()) {
             ctx.drawImage(mapImage, this.position.x, this.position.y);

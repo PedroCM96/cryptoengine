@@ -1,3 +1,3 @@
-export * from './textbox.ts';
+export * from './elements/textbox.ts';
 export * from './UI.ts';
-export * from './handleUI.ts';
+export * from './functions/handleUI.ts';

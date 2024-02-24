@@ -1,5 +1,5 @@
-import {Position, positionToString} from "../types";
-import {Event} from "../event";
+import {Position, positionToString} from "../../shared";
+import {Event} from "../../event";
 import {loadEventsFromJson} from "./loadEventsFromJson.ts";
 
 export async function loadMapEvents(mapId: number, mapEvents: any): Promise<Map<string, Event>> {

@@ -1,17 +1,24 @@
 import {Global} from "./Global.ts";
-import {handleCharacterMovement} from "./character";
+import {Character, handleCharacterMovement} from "./character";
 import {handleEvents} from "./event";
-import {handleUI} from "./ui";
-import {resetActionButtons} from "./input";
+import {handleUI, UI} from "./ui";
+import {InputState, resetActionButtons} from "./input";
+import {Map} from './map';
 
 export async function process(global: Global): Promise<void>
 {
-    // Render map with character
-    global.map.render(global);
+    const character: Character = global.character;
+    const inputState: InputState = global.inputState;
+    const map: Map = global.map;
+    const ui: UI = global.ui;
+    const ctx: CanvasRenderingContext2D = global.ctx;
 
-    global.character.render(global);
+    // Render map with character
+    global.map.render(character, ctx);
+
+    global.character.render(ctx, inputState);
     // Handle character's movement
-    const hasMoved = handleCharacterMovement(global);
+    const hasMoved = handleCharacterMovement(inputState, map, character);
 
     // Reset permanent events
     if (hasMoved) {
@@ -22,9 +29,10 @@ export async function process(global: Global): Promise<void>
     await handleEvents(global);
 
     // Handle UI
-    await handleUI(global);
+    await handleUI(ui);
 
-    resetActionButtons(global.inputState);
+    // If any action button is pressed, we reset it.
+    resetActionButtons(inputState);
 }
 
 

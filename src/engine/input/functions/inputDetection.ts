@@ -1,5 +1,5 @@
-import {InputState} from "./InputState.ts";
-import {InputMap} from "./InputMap.ts";
+import {InputState} from "../InputState.ts";
+import {InputMap} from "../InputMap.ts";
 
 export function inputDetection(inputState: &InputState, inputMap: InputMap, pressedKeyCode: string) {
     let inputDetected: boolean = false;

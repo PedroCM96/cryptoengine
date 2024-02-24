@@ -1,5 +1,5 @@
-import {InputState} from "./InputState.ts";
-import {Direction} from "./Direction.ts";
+import {InputState} from "../InputState.ts";
+import {Direction} from "../Direction.ts";
 
 export function getInputDirection(inputState: InputState): Direction | null {
     if (inputState.UP) {

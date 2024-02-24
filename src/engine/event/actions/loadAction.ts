@@ -8,7 +8,6 @@ export async function loadAction(actionKey: string, actionData: any): Promise<Ac
         throw new Error(`Unknown action key ${actionKey}`);
     }
 
-
     const classModule = await import( `../actions/${className}.ts`);
     return classModule[className].load(actionData);
 }

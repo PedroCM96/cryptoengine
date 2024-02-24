@@ -4,7 +4,10 @@
     "trigger": "COLLISION",
     "script": [
       {
-        "showMessage": "Casa súper guapa"
+        "showMessage": "La casa está cerrada."
+      },
+      {
+        "showMessage": "No puedo entrar."
       }
     ],
     "allowMove": false,
@@ -15,7 +18,49 @@
     "trigger": "COLLISION",
     "script": [
       {
+        "showMessage": "Esta casa también está cerrada."
+      }
+    ],
+    "allowMove": false,
+    "permanent": true
+  },
+  {
+    "id": 2,
+    "trigger": "INTERACT",
+    "script": [
+      {
         "showMessage": "Casa de gays"
+      },
+      {
+        "showMessage": "¿Debo entrar?"
+      }
+    ],
+    "allowMove": false,
+    "permanent": true
+  },
+  {
+    "id": 3,
+    "trigger": "INTERACT",
+    "script": [
+      {
+        "showMessage": "Casa de papel"
+      }
+    ],
+    "allowMove": false,
+    "permanent": true
+  },
+  {
+    "id": 4,
+    "trigger": "COLLISION",
+    "script": [
+      {
+        "showMessage": "Duna es una bebe"
+      },
+      {
+        "showMessage": "Silvia es una bebe"
+      },
+      {
+        "showMessage": "Pedro es un bebe"
       }
     ],
     "allowMove": false,

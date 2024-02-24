@@ -16,6 +16,7 @@ export class ShowMessage extends Action {
     }
 
     async doExecute(global: Global): Promise<void> {
+        this.start();
         global.character.disableMovement();
         global.ui.openTextBox(this.message);
 
@@ -23,6 +24,7 @@ export class ShowMessage extends Action {
             global.ui.closeTextBox();
             global.character.enableMovement();
             this.disable();
+            this.finish();
         }
     }
 }

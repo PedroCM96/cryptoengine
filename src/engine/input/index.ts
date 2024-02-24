@@ -1,5 +1,5 @@
 export * from './InputMap.ts';
 export * from './InputState.ts';
-export * from './inputDetection.ts';
+export * from './functions/inputDetection.ts';
 export * from './Direction.ts';
-export * from './getInputDirection.ts';
+export * from './functions/getInputDirection.ts';

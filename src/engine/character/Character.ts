@@ -1,6 +1,5 @@
-import {Position} from "../types";
-import {Direction, getInputDirection} from "../input";
-import {Global} from "../Global.ts";
+import {Position} from "../shared";
+import {Direction, getInputDirection, InputState} from "../input";
 import {
     CELL_SIZE,
     CHARACTER_ANIMATION_MAP,
@@ -24,9 +23,9 @@ export class Character extends Animable {
     private isMoving: boolean; // If the character is currently moving.
     private moveInProgress: boolean; // If the character has a movement between cells pending.
 
-    constructor(img: HTMLImageElement) {
+    constructor(img: HTMLImageElement, position: Position) {
         super(CHARACTER_ANIMATION_MAP, img, CHARACTER_ANIMATION_SPEED);
-        this.position = {x: 15, y: 7};
+        this.position = position;
         this.canMove = true;
         this.lookingAt = Direction.DOWN;
         this.isMoving = false;
@@ -51,10 +50,10 @@ export class Character extends Animable {
         this.canMove = false;
     }
 
-    render(global: Global): void {
-        this.isMoving = !!getInputDirection(global.inputState);
+    render(ctx: CanvasRenderingContext2D, inputState: InputState): void {
+        this.isMoving = !!getInputDirection(inputState);
         const animatedCharacter = this.getAnimatedCharacter();
-        const ctx = global.ctx;
+
         ctx.drawImage(
             animatedCharacter,
             ctx.canvas.width / 2 - CHARACTER_WIDTH / 2 - (CELL_SIZE / 2),
@@ -101,6 +100,23 @@ export class Character extends Animable {
 
     isLookingAt(direction: Direction): boolean {
         return this.lookingAt === direction;
+    }
+
+    getLookingCellPosition(): Position {
+        if (this.lookingAt === Direction.UP) {
+            return {...this.position, y: this.position.y - 1};
+        }
+
+        if (this.lookingAt === Direction.DOWN) {
+            return {...this.position, y: this.position.y + 1};
+        }
+
+        if (this.lookingAt === Direction.LEFT) {
+            return {...this.position, x: this.position.x - 1};
+        }
+
+        // Right
+        return {...this.position, x: this.position.x + 1};
     }
 
     public startMove(): void {

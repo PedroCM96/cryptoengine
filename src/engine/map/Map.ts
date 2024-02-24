@@ -1,10 +1,10 @@
 import {MAP_RESOURCE_EXTENSION, MAP_RESOURCE_PREFIX} from "../config.ts";
 import {MapData} from "./MapData.ts";
-import {Position, positionToString} from "../types";
-import {loadDataFromJson} from "./loadDataFromJson.ts";
+import {Position, positionToString} from "../shared";
+import {loadDataFromJson} from "./functions/loadDataFromJson.ts";
 import {Event} from "../event";
-import {Global} from "../Global.ts";
 import {Camera} from "./camera";
+import {Character} from "../character";
 
 export class Map {
 
@@ -21,8 +21,8 @@ export class Map {
         return new Map(id, data);
     }
 
-    render(global: Global) {
-        this.camera.render(this.img, global.character, global.ctx);
+    render(character: Character, ctx: CanvasRenderingContext2D) {
+        this.camera.render(this.img, character, ctx);
     }
 
     willCollide(position: Position): boolean {

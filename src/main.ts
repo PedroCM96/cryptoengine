@@ -13,7 +13,7 @@ import {
     UI
 } from "./engine";
 import {initInputState, inputDetection, InputState, resetInputState} from "./engine/input";
-import {Global} from "./engine/Global.ts";
+import {Global} from "./engine";
 import {Character} from "./engine/character";
 
 
@@ -21,8 +21,9 @@ let inputState: InputState|null = null;
 let character: Character|null = null;
 let map: Map|null = null;
 let ui: UI | null = null;
-
+let global: Global | null = null;
 let ctx: CanvasRenderingContext2D|null = null;
+
 
 // Initializing canvas and game state
 document.addEventListener("DOMContentLoaded", async () => {
@@ -34,13 +35,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     canvas.width = GAME_CANVAS_SIZE[0];
     canvas.height = GAME_CANVAS_SIZE[1];
 
+    // Initialize engine
     ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     map = await Map.fromId(0); // Hardcoded ID 0
     inputState = initInputState(KEYBOARD_INPUT_MAP);
     ui = initUI();
     const characterImg = new Image();
     characterImg.src = CHARACTER_RESOURCE;
-    character = new Character(characterImg);
+    character = new Character(characterImg, {x: 17,  y: 11});
+    global = new Global(ctx, inputState, character, map, ui);
 
     // UI Adjustments
     const textbox = document.getElementById('textbox') as HTMLElement;
@@ -51,17 +54,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     window.requestAnimationFrame(gameLoop);
 });
 
+
 // Detecting inputs
+
+let lastKeyPressed: string = '';
+
 document.addEventListener("keydown", (e) => {
-    if (!ctx || !inputState || !character || !map || !ui) {
+    if (!inputState) {
         return;
     }
 
+    if (e.code !== lastKeyPressed) {
+        lastKeyPressed = e.code;
+        resetInputState(inputState);
+    }
     inputDetection(inputState, KEYBOARD_INPUT_MAP, e.code);
 });
 
-document.addEventListener("keyup", () => resetInputState(inputState as InputState));
-
+document.addEventListener("keyup", (e) => {
+    if (e.code === lastKeyPressed) {
+        resetInputState(inputState as InputState);
+    }
+});
+// Game loop
 let secondsPassed;
 let oldTimeStamp = 0;
 let fps;
@@ -75,13 +90,10 @@ let fps;
 
 
      if (!ctx || !inputState || !character || !map || !ui) {
-         window.requestAnimationFrame(gameLoop);
          return;
      }
 
-     const global = new Global(ctx, inputState, character, map, ui);
-     await process(global);
+     await process(global as Global);
      window.requestAnimationFrame(gameLoop);
-
  }
 
