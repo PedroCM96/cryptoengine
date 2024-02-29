@@ -34,9 +34,9 @@ export const CHARACTER_ANIMATION_MAP: AnimationMap = new Map<number, number>([
 export const MAP_RESOURCE_PREFIX: string = 'map_';
 export const MAP_RESOURCE_EXTENSION: string = 'jpeg';
 
-export const MAP_DATA_FOLDER = '../../../data/maps';
+export const MAP_DATA_FOLDER = 'data/maps';
 
-export const MAPA_EVENTS_FOLDER = '../../../data/maps/events'
+export const MAPA_EVENTS_FOLDER = 'data/maps/events'
 
 // UI
 export const TEXTBOX_HEIGHT = 60;

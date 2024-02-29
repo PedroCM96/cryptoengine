@@ -4,16 +4,20 @@ import {StubbedInstance, stubInterface} from "ts-sinon";
 import {loadDataFromJson} from "../../../../src/engine/map/functions/loadDataFromJson";
 import {MapData} from "../../../../src/engine";
 
-jest.mock("../../../../src/engine/map/functions/loadMapEvents", () => ({
-    loadMapEvents: jest.fn()
+
+/* @ts-ignore*/
+global.fetch = jest.fn(() =>  Promise.resolve({
+    json: () => Promise.resolve({
+        size: [340, 340],
+        collisions: [
+            [20, 21],
+            [30, 34]
+        ],
+    })
 }));
 
-jest.mock("./map_0.json", () => ({
-    size: [340, 340],
-    collisions: [
-        [20, 21],
-        [30, 34]
-    ],
+jest.mock("../../../../src/engine/map/functions/loadMapEvents", () => ({
+    loadMapEvents: jest.fn()
 }));
 
 describe('Load data from JSON function test', () => {
@@ -24,6 +28,9 @@ describe('Load data from JSON function test', () => {
     beforeEach(() => {
         loadMapEventsMock = loadMapEvents as jest.Mock;
         event = stubInterface<Event>();
+    });
+
+    afterEach(() => {
         jest.resetAllMocks();
     });
 
@@ -36,8 +43,8 @@ describe('Load data from JSON function test', () => {
 
         const r: MapData = await sut(
             0,
-            '../../../../test/engine/map/functions/map_0.json',
-            '../../../../test/engine/map/functions/events_0.json'
+            'test/engine/map/functions/map_0.json',
+            'test/engine/map/functions/events_0.json'
         );
         expect(r.size).toStrictEqual([340, 340]);
         expect(r.collisions).toStrictEqual([[20, 21], [30, 34]]);

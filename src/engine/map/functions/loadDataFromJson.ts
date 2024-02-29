@@ -6,7 +6,7 @@ export async function loadDataFromJson(
     mapDataRelativePath: string,
     mapEventsRelativePath: string
 ): Promise<MapData> {
-    const jsonData = await import(mapDataRelativePath);
+    const jsonData = await (await fetch(mapDataRelativePath)).json();
     const mapEvents = await loadMapEvents(id, jsonData.events, mapEventsRelativePath);
 
     return {
