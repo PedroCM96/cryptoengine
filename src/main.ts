@@ -14,6 +14,7 @@ import {
 } from "./engine";
 import {initInputState, inputDetection, InputState, resetInputState} from "./engine/input";
 import {Character, PlayableCharacter} from "./engine/character";
+import {Position} from "./engine/shared";
 
 
 let inputState: InputState|null = null;
@@ -24,8 +25,8 @@ let global: Global | null = null;
 let ctx: CanvasRenderingContext2D|null = null;
 
 
-// Initializing canvas and game state
-document.addEventListener("DOMContentLoaded", async () => {
+// Map is the base when all the game will occur, so all the game will be loaded.
+async function initializeMap(mapId: number, characterPosition: Position | null = null): Promise<void> {
     const appContainer = document.getElementById('app') as HTMLElement;
     appContainer.style.width = `${GAME_CANVAS_SIZE[0]}px`;
     appContainer.style.height = `${GAME_CANVAS_SIZE[1]}px`;
@@ -36,12 +37,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Initialize engine
     ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    map = await Map.fromId(0, new Image()); // Hardcoded ID 0
+    map = await Map.fromId(mapId, new Image()); // Hardcoded ID 0
     inputState = initInputState(KEYBOARD_INPUT_MAP);
     ui = new UI();
     const characterImg = new Image();
     characterImg.src = CHARACTER_RESOURCE;
-    character = new PlayableCharacter(characterImg, {x: 17,  y: 11});
+    character = new PlayableCharacter(characterImg, characterPosition || map.getInitializeCharacterPosition());
     global = new Global(ctx, inputState, character as PlayableCharacter, map, ui, document);
 
     // UI Adjustments
@@ -50,6 +51,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     textbox.style.height = `${TEXTBOX_HEIGHT}px`;
     textbox.style.borderRadius = `${TEXTBOX_BORDER_RADIUS}px`;
     textbox.style.padding = `${TEXTBOX_PADDING}px`;
+}
+// Initializing canvas and game state
+document.addEventListener("DOMContentLoaded", async () => {
+    await initializeMap(0);
     window.requestAnimationFrame(gameLoop);
 });
 
@@ -95,4 +100,6 @@ let fps;
      await process(global as Global);
      window.requestAnimationFrame(gameLoop);
  }
+
+ window.setTimeout(() => { initializeMap(1)}, 10000)
 

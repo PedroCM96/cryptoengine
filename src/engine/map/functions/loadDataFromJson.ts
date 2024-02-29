@@ -12,6 +12,10 @@ export async function loadDataFromJson(
     return {
         size: jsonData.size,
         collisions: jsonData.collisions,
-        events: mapEvents
+        events: mapEvents,
+        initializeCharacterPosition: {
+            x: jsonData.initializeCharacterPosition[0],
+            y: jsonData.initializeCharacterPosition[1]
+        }
     };
 }

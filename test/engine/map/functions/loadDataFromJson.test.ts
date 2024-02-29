@@ -13,6 +13,7 @@ global.fetch = jest.fn(() =>  Promise.resolve({
             [20, 21],
             [30, 34]
         ],
+        initializeCharacterPosition: [10, 40]
     })
 }));
 
@@ -48,6 +49,7 @@ describe('Load data from JSON function test', () => {
         );
         expect(r.size).toStrictEqual([340, 340]);
         expect(r.collisions).toStrictEqual([[20, 21], [30, 34]]);
+        expect(r.initializeCharacterPosition).toStrictEqual({x: 10, y: 40});
         expect(r.events).not.toBeNull();
         expect(r.events.size).toBe(loadedMapEvents.size);
         expect(r.events.get('10,10')).not.toBeNull();

@@ -1,5 +1,6 @@
 {
   "size": [30, 30],
+  "initializeCharacterPosition": [17,11],
   "collisions": [
     [11,12],
     [18,13]

@@ -75,6 +75,10 @@ export class Map {
         }
     }
 
+    getInitializeCharacterPosition(): Position {
+        return this.data.initializeCharacterPosition;
+    }
+
     private initNpcs(): void {
         for (const x of this.data.events) {
             if (!x[1].isNpc()) {
