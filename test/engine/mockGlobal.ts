@@ -10,8 +10,9 @@ type GlobalNullableConstructor = {
     inputState?: InputState,
     character?: Character,
     map?: Map,
-    ui?: UI
-
+    ui?: UI,
+    /* @ts-ignore */
+    document?: Document
 }
 export function mockGlobal(args: GlobalNullableConstructor): StubbedInstance<Global> {
     return stubConstructor(
@@ -20,6 +21,7 @@ export function mockGlobal(args: GlobalNullableConstructor): StubbedInstance<Glo
         args.inputState,
         args.character,
         args.map,
-        args.ui
+        args.ui,
+        args.document
         );
 }

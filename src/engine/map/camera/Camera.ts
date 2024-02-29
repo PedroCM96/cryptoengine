@@ -1,6 +1,6 @@
 import {Position} from "../../shared";
 import {Character} from "../../character";
-import {CELL_SIZE, CHARACTER_SPEED} from "../../config.ts";
+import {CELL_SIZE, CHARACTER_SPEED, GAME_CANVAS_SIZE} from "../../config.ts";
 
 export class Camera {
     constructor(private  position: Position) {}
@@ -8,8 +8,8 @@ export class Camera {
         let characterPositionX = position.x * CELL_SIZE;
         let characterPositionY = position.y * CELL_SIZE;
 
-        const x = -(characterPositionX - canvas.width / (2));
-        const y = -(characterPositionY - canvas.height / (2));
+        const x = -(characterPositionX - canvas.width / (2)) + (CELL_SIZE / 2);
+        const y = -(characterPositionY - canvas.height / (2) + (CELL_SIZE / 2));
 
         return {x,y}
     }
@@ -30,13 +30,26 @@ export class Camera {
         this.position.x += deltaX * CHARACTER_SPEED;
         this.position.y += deltaY * CHARACTER_SPEED;
 
-        if (deltaX !== 0 || deltaY !== 0) {
-            character.startMove();
-        } else {
+        if (deltaX === 0 && deltaY === 0) {
             character.finishMove();
         }
 
         ctx.drawImage(mapImage, this.position.x, this.position.y);
+    }
+
+    isVisible(position: Position, referencePosition: Position) {
+        const xScope = Math.floor(GAME_CANVAS_SIZE[0] / CELL_SIZE / 2);
+        const yScope = Math.floor(GAME_CANVAS_SIZE[1] / CELL_SIZE / 2);
+
+        return (position.x <= (referencePosition.x + xScope) && (position.x >= (referencePosition.x - xScope))
+            && (position.y <= referencePosition.y + yScope) && ((position.y) >= (referencePosition.y - yScope)));
+    }
+
+    getTopLeftCornerCellPosition(referencePosition: Position): Position {
+        return {
+            x: referencePosition.x - Math.floor(GAME_CANVAS_SIZE[0] / CELL_SIZE / 2),
+            y: referencePosition.y - Math.floor(GAME_CANVAS_SIZE[1] / CELL_SIZE / 2)
+        }
     }
 
     private shouldSmooth(): boolean {

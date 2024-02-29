@@ -1,5 +1,6 @@
 import {loadAction} from "../../../../src/engine/event/actions";
 import {loadEventFromJson, Trigger} from "../../../../src/engine/event";
+import {Direction} from "../../../../src/engine/input";
 
 jest.mock("../../../../src/engine/event/actions/loadAction", () => ({
     loadAction: jest.fn()
@@ -24,6 +25,8 @@ describe('Load event from JSON function test', () => {
     };
 
     beforeEach(() => {
+        /* @ts-ignore */
+        global.Image = class Image {};
         loadActionMock = loadAction as jest.Mock;
     });
 
@@ -74,5 +77,25 @@ describe('Load event from JSON function test', () => {
         expect(loadActionMock.mock.calls[0][1]).toStrictEqual({foo: 'bar'});
         expect(loadActionMock.mock.calls[1][0]).toBe('anotherKey');
         expect(loadActionMock.mock.calls[1][1]).toStrictEqual({bar: 'baz'});
+    });
+
+    it('Should load npc event correctly', async () => {
+        const jsonWithNpc = {
+            ...json,
+            npc: {
+                resource: "NPC_02.png",
+                lookingAt: "DOWN",
+                canMove: true,
+                lookAtInteract: true,
+                resetDirectionAfterInteract: true
+            }
+        }
+
+        const result = await sut(jsonWithNpc);
+        expect(result.isNpc()).toBe(true);
+        expect(result.getNpc()).not.toBeNull();
+        expect(result.getNpc()?.isLookingAt(Direction.DOWN)).toBeTruthy();
+        expect(result.getNpc()?.shouldLookAtInteract()).toBeTruthy();
+        expect(result.getNpc()?.shouldResetLookingAt()).toBeTruthy();
     })
 })

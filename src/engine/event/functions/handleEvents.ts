@@ -3,6 +3,11 @@ import {Trigger} from "../Trigger.ts";
 import {Global} from "../../Global.ts";
 
 export async function handleEvents(global: Global): Promise<void> {
+    const inProgressEvent = global.map.getInProgressEvent();
+    if (inProgressEvent) {
+        await inProgressEvent.execute(global);
+    }
+
     const currentCharacterPosition = global.character.getPosition();
     const characterLookingCellPosition = global.character.getLookingCellPosition();
 

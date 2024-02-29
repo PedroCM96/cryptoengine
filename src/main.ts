@@ -2,7 +2,7 @@ import './style.css'
 import {
     CHARACTER_RESOURCE,
     GAME_CANVAS_SIZE,
-    initUI,
+    Global,
     KEYBOARD_INPUT_MAP,
     Map,
     process,
@@ -13,8 +13,7 @@ import {
     UI
 } from "./engine";
 import {initInputState, inputDetection, InputState, resetInputState} from "./engine/input";
-import {Global} from "./engine";
-import {Character} from "./engine/character";
+import {Character, PlayableCharacter} from "./engine/character";
 
 
 let inputState: InputState|null = null;
@@ -37,13 +36,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Initialize engine
     ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    map = await Map.fromId(0); // Hardcoded ID 0
+    map = await Map.fromId(0, new Image()); // Hardcoded ID 0
     inputState = initInputState(KEYBOARD_INPUT_MAP);
-    ui = initUI();
+    ui = new UI();
     const characterImg = new Image();
     characterImg.src = CHARACTER_RESOURCE;
-    character = new Character(characterImg, {x: 17,  y: 11});
-    global = new Global(ctx, inputState, character, map, ui);
+    character = new PlayableCharacter(characterImg, {x: 17,  y: 11});
+    global = new Global(ctx, inputState, character as PlayableCharacter, map, ui, document);
 
     // UI Adjustments
     const textbox = document.getElementById('textbox') as HTMLElement;

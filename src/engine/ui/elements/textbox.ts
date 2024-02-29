@@ -4,7 +4,7 @@ export type TextBox = {
     content: string
 }
 
-export function openTextBox(textBox: TextBox): void {
+export function openTextBox(textBox: TextBox, document: Document): void {
     const div = document.getElementById('textbox') as HTMLElement;
     div.style.visibility = 'visible';
     div.style.height = `${textBox.height}px`;
@@ -12,7 +12,7 @@ export function openTextBox(textBox: TextBox): void {
     div.innerText = textBox.content;
 }
 
-export function closeTextBox(): void {
+export function closeTextBox(document: Document): void {
     const div = document.getElementById('textbox') as HTMLElement;
     div.style.visibility = 'hidden';
     div.innerText = '';

@@ -1,14 +1,14 @@
-import {Character} from "../../../src/engine/character";
+import {PlayableCharacter} from "../../../src/engine/character";
 import {Position} from "../../../src/engine/shared";
 import {Direction} from "../../../src/engine/input";
 
 describe('Character class test', () => {
     const initialPosition: Position = {x: 1, y: 1};
-    let sut: Character;
+    let sut: PlayableCharacter;
 
     beforeEach(() => {
         /*@ts-ignore*/
-       sut = new Character({} as HTMLImageElement, initialPosition);
+       sut = new PlayableCharacter({} as HTMLImageElement, initialPosition);
     });
 
     it('Should calculate correctly next position if movement direction is UP', () => {

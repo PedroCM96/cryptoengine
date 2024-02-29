@@ -29,6 +29,12 @@ describe('Handle Event function test', () => {
         sinon.reset();
     })
 
+    it('Should process event in progress regardless position', () => {
+        map.getInProgressEvent.returns(event);
+        sut(global);
+        expect(event.execute.callCount).toBe(1);
+    });
+
     // Collision Trigger Events
     it('Should request event to map in character position', () => {
         const currentCharacterPosition: Position = {x: 20, y: 15};

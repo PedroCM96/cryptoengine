@@ -56,13 +56,13 @@ describe('Script class test', () => {
         // First execution, should return true since needs to execute the second action
         firstAction.isEnabled = true;
         secondAction.isEnabled = true;
-        await instance.reproduce(global);
-        expect(instance.isCurrentlyRunning()).toBeTruthy();
 
-        // Second execution, should exec the second action so isCurrentlyRunning should be false
-        firstAction.isEnabled = false;
-        secondAction.isEnabled = true;
+        /* @ts-ignore */
+        firstAction.execute = (async (): Promise<void> => {
+            firstAction.isEnabled = false;
+        })
         await instance.reproduce(global);
-        expect(instance.isCurrentlyRunning()).toBeFalsy();
+
+        expect(instance.isCurrentlyRunning()).toBeTruthy();
     });
 })

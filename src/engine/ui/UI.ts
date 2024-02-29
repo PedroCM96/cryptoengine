@@ -2,7 +2,7 @@ import {TextBox} from "./elements/textbox.ts";
 import {TEXTBOX_HEIGHT, TEXTBOX_WIDTH} from "../config.ts";
 
 export class UI {
-    constructor(private textBox: TextBox | null) {}
+    constructor(private textBox: TextBox | null = null) {}
 
     openTextBox(content: string): void {
         this.textBox = {
@@ -23,8 +23,4 @@ export class UI {
     getTextBox(): TextBox|null {
         return this.textBox;
     }
-}
-
-export function initUI(): UI {
-    return new UI(null);
 }

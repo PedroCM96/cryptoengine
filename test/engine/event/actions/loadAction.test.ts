@@ -20,6 +20,6 @@ describe('Load Action function test', () => {
        await sut('showMessage', data);
 
        expect(showMessage['ShowMessage'].load.mock.calls).toHaveLength(1);
-       expect(showMessage['ShowMessage'].load.mock.calls[0][0]).toBe(data)
+       expect(showMessage['ShowMessage'].load.mock.calls[0][0]).toBe(data);
    });
 });

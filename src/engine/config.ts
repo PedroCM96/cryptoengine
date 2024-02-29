@@ -3,7 +3,7 @@ import {Key} from "ts-key-enum";
 import {AnimationMap} from "./animation";
 
 // General
-export const GAME_CANVAS_SIZE: [number, number] = [576, 384];
+export const GAME_CANVAS_SIZE: [number, number] = [608, 416];
 export const CELL_SIZE = 32;
 export const KEYBOARD_INPUT_MAP: InputMap = {
     UP: [Key.ArrowUp],
@@ -33,6 +33,10 @@ export const CHARACTER_ANIMATION_MAP: AnimationMap = new Map<number, number>([
 // Map
 export const MAP_RESOURCE_PREFIX: string = 'map_';
 export const MAP_RESOURCE_EXTENSION: string = 'jpeg';
+
+export const MAP_DATA_FOLDER = '../../../data/maps';
+
+export const MAPA_EVENTS_FOLDER = '../../../data/maps/events'
 
 // UI
 export const TEXTBOX_HEIGHT = 60;

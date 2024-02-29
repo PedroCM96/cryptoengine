@@ -8,6 +8,9 @@
       },
       {
         "showMessage": "No puedo entrar."
+      },
+      {
+        "showMessage": "Gay."
       }
     ],
     "allowMove": false,
@@ -15,7 +18,7 @@
   },
   {
     "id": 1,
-    "trigger": "COLLISION",
+    "trigger": "INTERACT",
     "script": [
       {
         "showMessage": "Esta casa también está cerrada."
@@ -29,10 +32,10 @@
     "trigger": "INTERACT",
     "script": [
       {
-        "showMessage": "Casa de gays"
+        "showMessage": "Casa A"
       },
       {
-        "showMessage": "¿Debo entrar?"
+        "showMessage": "Prohibido el paso"
       }
     ],
     "allowMove": false,
@@ -43,10 +46,15 @@
     "trigger": "INTERACT",
     "script": [
       {
-        "showMessage": "Casa de papel"
+        "showMessage": "Prohibido el paso"
+      },
+      {
+        "moveCharacter": {
+          "movements": ["DOWN", "DOWN", "LEFT", "LEFT", "UP", "UP"]
+        }
       }
     ],
-    "allowMove": false,
+    "allowMove": true,
     "permanent": true
   },
   {
@@ -54,16 +62,55 @@
     "trigger": "COLLISION",
     "script": [
       {
-        "showMessage": "Duna es una bebe"
+        "showMessage": " Phasellus eu dui ut metus luctus tincidunt. Sed hendrerit nibh et sem mollis mattis"
       },
       {
-        "showMessage": "Silvia es una bebe"
+        "showMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu odio a enim vehicula convallis. Aliquam lacinia metus leo."
       },
       {
-        "showMessage": "Pedro es un bebe"
+        "showMessage": "uisque feugiat hendrerit tellus, vel fermentum lectus rutrum eget. Integer pretium pulvinar varius. Maecenas nibh felis, aliquet eu euismod vitae."
       }
     ],
     "allowMove": false,
     "permanent": true
+  },
+  {
+    "id": 5,
+    "trigger": "INTERACT",
+    "allowMove": false,
+    "permanent": true,
+    "npc": {
+      "resource": "NPC_01.png",
+      "lookingAt": "DOWN",
+      "canMove": true,
+      "lookAtInteract": true,
+      "resetDirectionAfterInteract": true
+    },
+    "script": [
+      {
+        "showMessage": "Hola!"
+      },
+      {
+        "showMessage": "COmo tas!"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "trigger": "INTERACT",
+    "allowMove": false,
+    "permanent": true,
+    "npc": {
+      "resource": "NPC_02.png",
+      "lookingAt": "RIGHT",
+      "canMove": true,
+      "lookAtInteract": true,
+      "resetDirectionAfterInteract": true
+    },
+    "script": [
+      {
+        "showMessage": "Hola!"
+      }
+    ]
   }
 ]

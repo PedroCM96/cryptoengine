@@ -1,42 +1,45 @@
 import {Position} from "../shared";
-import {Direction, getInputDirection, InputState} from "../input";
-import {
-    CELL_SIZE,
-    CHARACTER_ANIMATION_MAP,
-    CHARACTER_ANIMATION_SPEED,
-    CHARACTER_HEIGHT,
-    CHARACTER_WIDTH
-} from "../config.ts";
-import {Animable} from "../animation";
+import {Direction} from "../input";
+import {CHARACTER_HEIGHT, CHARACTER_WIDTH} from "../config.ts";
+import {Animable, AnimationMap} from "../animation";
 
-export class Character extends Animable {
-    directionToYOffset: Record<Direction, number> = {
+export abstract class Character extends Animable {
+    characterDirectionToYOffset: Record<Direction, number> = {
         [Direction.DOWN]: 0,
         [Direction.LEFT]: -48,
         [Direction.RIGHT]: -96,
         [Direction.UP]: -146
     }
 
-    private position: Position; // Current position of the character in the map.
-    private lookingAt: Direction; // If character is looking up, looking down...
-    private canMove: boolean; // If character can move after press a direction input. For example, when a TextBox is opened.
-    private isMoving: boolean; // If the character is currently moving.
-    private moveInProgress: boolean; // If the character has a movement between cells pending.
+    protected position: Position; // Current position of the character in the map.
+    protected lookingAt: Direction; // If character is looking up, looking down...
+    protected canMove: boolean; // If character can move after press a direction input. For example, when a TextBox is opened.
+    protected isMoving: boolean; // If the character has a movement between cells pending.
 
-    constructor(img: HTMLImageElement, position: Position) {
-        super(CHARACTER_ANIMATION_MAP, img, CHARACTER_ANIMATION_SPEED);
+    private isMovingLastStates: boolean[] = [];
+
+    protected constructor(
+        img: HTMLImageElement,
+        position: Position,
+        canMove: boolean,
+        lookingAt: Direction,
+        isMoving: boolean,
+        animationMap: AnimationMap,
+        animationSpeed: number
+    ) {
+        super(animationMap, img, animationSpeed);
         this.position = position;
-        this.canMove = true;
-        this.lookingAt = Direction.DOWN;
-        this.isMoving = false;
-        this.moveInProgress = false;
+        this.canMove = canMove;
+        this.lookingAt = lookingAt;
+        this.isMoving = isMoving;
     }
 
     move(direction: Direction): boolean {
-        if (!this.canMove || this.moveInProgress) {
+        if (!this.canMove || this.isMoving) {
             return false;
         }
 
+        this.startMove();
         this.position = this.getNextPosition(direction);
         this.lookingAt = direction;
         return true;
@@ -50,16 +53,9 @@ export class Character extends Animable {
         this.canMove = false;
     }
 
-    render(ctx: CanvasRenderingContext2D, inputState: InputState): void {
-        this.isMoving = !!getInputDirection(inputState);
-        const animatedCharacter = this.getAnimatedCharacter();
 
-        ctx.drawImage(
-            animatedCharacter,
-            ctx.canvas.width / 2 - CHARACTER_WIDTH / 2 - (CELL_SIZE / 2),
-            ctx.canvas.height / 2 - CHARACTER_HEIGHT / 2 - (CELL_SIZE / 2)
-        );
-    }
+    abstract render(ctx: CanvasRenderingContext2D, args: any): void;
+
 
     getNextPosition(direction: Direction): Position {
         if (direction === Direction.UP) {
@@ -94,12 +90,20 @@ export class Character extends Animable {
         return this.position;
     }
 
+    setPosition(position: Position): void {
+        this.position = position;
+    }
+
     lookAt(direction: Direction): void {
         this.lookingAt = direction;
     }
 
     isLookingAt(direction: Direction): boolean {
         return this.lookingAt === direction;
+    }
+
+    isMoveInProgress(): boolean {
+        return this.isMoving;
     }
 
     getLookingCellPosition(): Position {
@@ -120,13 +124,14 @@ export class Character extends Animable {
     }
 
     public startMove(): void {
-        this.moveInProgress = true;
+        this.isMoving = true;
     }
 
     public finishMove(): void {
-        this.moveInProgress = false;
+        this.isMoving = false;
     }
-    private getAnimatedCharacter(): HTMLCanvasElement {
+
+    protected getAnimatedCharacter(): HTMLCanvasElement {
         const canvas = document.createElement('canvas');
         canvas.height = CHARACTER_HEIGHT;
         canvas.width = CHARACTER_WIDTH;
@@ -135,14 +140,24 @@ export class Character extends Animable {
 
         let animationOffset = 0;
 
-        if (this.isMoving) {
+        if (this.isMoveInProgressSmooth()) {
             animationOffset = this.getCurrentOffset();
             this.nextFrame();
         } else {
             this.resetAnimation();
         }
-        ctx2.drawImage(this.img, animationOffset, this.directionToYOffset[this.lookingAt]);
+        ctx2.drawImage(this.img, animationOffset, this.characterDirectionToYOffset[this.lookingAt]);
         this.nextFrame();
         return ctx2.canvas;
+    }
+
+    protected isMoveInProgressSmooth(): boolean {
+        if (this.isMovingLastStates.length < 2) {
+            this.isMovingLastStates.push(this.isMoving);
+        } else {
+            this.isMovingLastStates = this.isMovingLastStates.slice(1);
+            this.isMovingLastStates.push(this.isMoving);
+        }
+        return !!this.isMovingLastStates.find((s) => s);
     }
 }

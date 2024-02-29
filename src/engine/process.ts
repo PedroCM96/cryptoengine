@@ -16,20 +16,21 @@ export async function process(global: Global): Promise<void>
     // Render map with character
     global.map.render(character, ctx);
 
-    global.character.render(ctx, inputState);
+    global.character.render(ctx, {});
     // Handle character's movement
     const hasMoved = handleCharacterMovement(inputState, map, character);
 
     // Reset permanent events
+    global.map.restoreInteractiveEvents();
     if (hasMoved) {
-        global.map.restorePermanentEvents();
+        global.map.restoreCollideEvents();
     }
 
     // Check if any event has been triggered
     await handleEvents(global);
 
     // Handle UI
-    await handleUI(ui);
+    await handleUI(ui, global.document);
 
     // If any action button is pressed, we reset it.
     resetActionButtons(inputState);
