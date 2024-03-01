@@ -57,7 +57,7 @@ describe('Script class test', () => {
         firstAction.isEnabled = true;
         secondAction.isEnabled = true;
 
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         firstAction.execute = (async (): Promise<void> => {
             firstAction.isEnabled = false;
         })

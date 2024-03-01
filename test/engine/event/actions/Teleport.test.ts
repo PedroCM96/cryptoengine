@@ -24,11 +24,11 @@ describe('Teleport action test', () => {
         };
 
         const instance = sut.load(data);
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         expect(instance.mapId).toBe(1);
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         expect(instance.characterPosition).toStrictEqual({x: 10, y: 10});
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         expect(instance.characterLookAt).toBe(Direction.UP);
     });
 

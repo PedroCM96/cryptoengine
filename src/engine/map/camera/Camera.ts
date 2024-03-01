@@ -7,8 +7,8 @@ export class Camera {
 
     constructor(private  position: Position) {}
     calculatePosition(position: Position, canvas: HTMLCanvasElement): Position {
-        let characterPositionX = position.x * CELL_SIZE;
-        let characterPositionY = position.y * CELL_SIZE;
+        const characterPositionX = position.x * CELL_SIZE;
+        const characterPositionY = position.y * CELL_SIZE;
 
         const x = -(characterPositionX - canvas.width / (2)) + (CELL_SIZE / 2);
         const y = -(characterPositionY - canvas.height / (2) + (CELL_SIZE / 2));

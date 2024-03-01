@@ -54,7 +54,7 @@ export abstract class Character extends Animable {
     }
 
 
-    abstract render(ctx: CanvasRenderingContext2D, args: any): void;
+    abstract render(ctx: CanvasRenderingContext2D, args: unknown): void;
 
 
     getNextPosition(direction: Direction): Position {

@@ -5,7 +5,7 @@ import {loadDataFromJson} from "../../../../src/engine/map/functions/loadDataFro
 import {MapData} from "../../../../src/engine";
 
 
-/* @ts-ignore*/
+/* @ts-expect-error ignore*/
 global.fetch = jest.fn(() =>  Promise.resolve({
     json: () => Promise.resolve({
         size: [340, 340],

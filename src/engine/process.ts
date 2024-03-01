@@ -16,7 +16,7 @@ export async function process(global: Global): Promise<void>
     // Render map with character
     global.map.render(character, ctx);
 
-    global.character.render(ctx, {});
+    global.character.render(ctx);
     // Handle character's movement
     const hasMoved = handleCharacterMovement(inputState, map, character);
 

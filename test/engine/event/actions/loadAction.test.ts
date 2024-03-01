@@ -9,7 +9,7 @@ jest.mock("../../../../src/engine/event/actions/ShowMessage", () => ({
 describe('Load Action function test', () => {
     const sut = loadAction;
 
-    let showMessage = require('../../../../src/engine/event/actions/ShowMessage');
+    const showMessage = require('../../../../src/engine/event/actions/ShowMessage');
 
    it('Should throw error if action key is not supported', async () => {
        await expect(sut('Unsupported Action', {})).rejects.toBeTruthy();

@@ -5,7 +5,7 @@ import {Event, Trigger} from "../../../src/engine/event";
 describe('Map class test', () => {
 
     let mapData: StubbedInstance<MapData>
-    /* @ts-ignore */
+    /* @ts-expect-error ignore */
     let img: StubbedInstance<HTMLImageElement>;
     let event: StubbedInstance<Event>;
     let event2: StubbedInstance<Event>;
@@ -16,7 +16,7 @@ describe('Map class test', () => {
         event = stubInterface<Event>();
         event2 = stubInterface<Event>();
         event3 = stubInterface<Event>();
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         img = {} as HTMLImageElement ;
     });
     it('Should return true if will collide', () => {

@@ -57,6 +57,7 @@ export class NonPlayableCharacter extends Character {
         };
     }
 
+    /* eslint-ignore */
     render(ctx: CanvasRenderingContext2D, args: any) {
         const tlp = args.tlp as Position;
 

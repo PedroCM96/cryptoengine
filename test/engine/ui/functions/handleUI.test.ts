@@ -8,7 +8,7 @@ jest.mock("../../../../src/engine/ui/elements/textbox", () => ({
 
 describe('Handle UI function test', () => {
     const sut = handleUI;
-    /* @ts-ignore */
+    /* @ts-expect-error ignore */
     let document: Document;
     let ui: StubbedInstance<UI>;
     let openTextBoxMock: jest.Mock;
@@ -16,7 +16,7 @@ describe('Handle UI function test', () => {
 
     beforeEach(() => {
         ui = stubInterface<UI>();
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         document = stubInterface<Document>();
         openTextBoxMock = openTextBox as jest.Mock;
         closeTextBoxMock = closeTextBox as jest.Mock;

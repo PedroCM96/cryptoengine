@@ -6,9 +6,9 @@ export type InputState = {
 
 export function initInputState(inputMap: InputMap): InputState
 {
-    let initializedState: Record<keyof InputState, boolean> = {} as Record<keyof InputState, boolean>;
+    const initializedState: Record<keyof InputState, boolean> = {} as Record<keyof InputState, boolean>;
 
-    for (let key in inputMap) {
+    for (const key in inputMap) {
         initializedState[key as keyof InputMap] = false;
     }
 
@@ -16,7 +16,7 @@ export function initInputState(inputMap: InputMap): InputState
 }
 
 export function resetInputState(inputState: &InputState) {
-    for (let key in inputState) {
+    for (const key in inputState) {
         inputState[key as keyof InputMap] = false;
     }
 }

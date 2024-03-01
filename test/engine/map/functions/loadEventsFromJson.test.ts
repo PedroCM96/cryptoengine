@@ -1,7 +1,7 @@
 import {loadEventFromJson} from "../../../../src/engine/event";
 import {loadEventsFromJson} from "../../../../src/engine/map/functions/loadEventsFromJson";
 
-/* @ts-ignore*/
+/* @ts-expect-error ignore*/
 global.fetch = jest.fn(() => Promise.resolve({
     json: () => Promise.resolve([
         {

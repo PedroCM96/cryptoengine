@@ -7,7 +7,7 @@ describe('Character class test', () => {
     let sut: PlayableCharacter;
 
     beforeEach(() => {
-        /*@ts-ignore*/
+        /*@ts-expect-error ignore*/
        sut = new PlayableCharacter({} as HTMLImageElement, initialPosition);
     });
 

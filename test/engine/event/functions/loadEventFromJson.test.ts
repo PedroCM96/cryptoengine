@@ -25,7 +25,7 @@ describe('Load event from JSON function test', () => {
     };
 
     beforeEach(() => {
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         global.Image = class Image {};
         loadActionMock = loadAction as jest.Mock;
     });

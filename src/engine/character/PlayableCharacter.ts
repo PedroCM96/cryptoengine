@@ -9,12 +9,14 @@ import {
     GAME_CANVAS_SIZE
 } from "../config.ts";
 
+
+// @ts-ignore
 export class PlayableCharacter extends Character {
     constructor(img: HTMLImageElement, position: Position) {
         super(img, position, true, Direction.DOWN, false, CHARACTER_ANIMATION_MAP, CHARACTER_ANIMATION_SPEED);
     }
 
-    /* @ts-ignore */
+
     getRenderPosition(): Position {
         return {
             x: (GAME_CANVAS_SIZE[0] / 2) - CELL_SIZE / 2,
@@ -23,7 +25,7 @@ export class PlayableCharacter extends Character {
     }
 
     /* @ts-ignore */
-    render(ctx: CanvasRenderingContext2D, args: any) {
+    render(ctx: CanvasRenderingContext2D) {
         this.isMoving = this.isMoveInProgress();
         const animatedCharacter = this.getAnimatedCharacter();
         const position = this.getRenderPosition();
@@ -33,5 +35,5 @@ export class PlayableCharacter extends Character {
             position.x,
             position.y + 10
         );
-    };
+    }
 }

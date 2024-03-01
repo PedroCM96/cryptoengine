@@ -6,14 +6,14 @@ import {Character} from "../../src/engine/character";
 import {Bus} from "../../src/engine/bus";
 
 type GlobalNullableConstructor = {
-    /* @ts-ignore*/
+    /* @ts-expect-error ignore*/
     ctx?: CanvasRenderingContext2D,
     inputState?: InputState,
     character?: Character,
     map?: Map,
     ui?: UI,
     bus?: Bus,
-    /* @ts-ignore */
+    /* @ts-expect-error ignore */
     document?: Document
 }
 export function mockGlobal(args: GlobalNullableConstructor): StubbedInstance<Global> {

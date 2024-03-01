@@ -1,5 +1,5 @@
 
-export type Message = [BusMessageType, any];
+export type Message = [BusMessageType, unknown];
 export enum BusMessageType {
     TELEPORT = "TELEPORT"
 }

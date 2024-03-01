@@ -20,7 +20,7 @@ describe('Bus class test', () => {
 
     it('Should return next message', () => {
         const sut = new Bus();
-        /* @ts-ignore */
+        /* @ts-expect-error ignore ignore */
         sut.messages.push(...[message2, message3, message]);
         const first = sut.next();
         const second = sut.next();
@@ -33,7 +33,7 @@ describe('Bus class test', () => {
 
     it('Should return that has messages', () => {
         const sut = new Bus();
-        /* @ts-ignore */
+        /* @ts-expect-error ignore */
         sut.messages.push(...[message2, message3, message]);
         expect(sut.hasMessages()).toBeTruthy();
     });

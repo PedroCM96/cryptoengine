@@ -22,10 +22,9 @@ export abstract class Action {
         await this.doExecute(global);
     }
 
-    /* @ts-ignore */
     static load(data: any): Action {
-        throw new Error('Should override this method!');
-    };
+        throw new Error(`Should override this method! ${data}`);
+    }
 
     protected start(): void {
         this.isExecuting = true;
