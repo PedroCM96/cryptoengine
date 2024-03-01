@@ -3,6 +3,8 @@ import {Character} from "../../character";
 import {CELL_SIZE, CHARACTER_SPEED, GAME_CANVAS_SIZE} from "../../config.ts";
 
 export class Camera {
+    private initializedCamera = false;
+
     constructor(private  position: Position) {}
     calculatePosition(position: Position, canvas: HTMLCanvasElement): Position {
         let characterPositionX = position.x * CELL_SIZE;
@@ -18,6 +20,7 @@ export class Camera {
         const targetPosition = this.calculatePosition(character.getPosition(), ctx.canvas);
 
         if (!this.shouldSmooth()) {
+            this.initializedCamera = true;
             ctx.drawImage(mapImage, this.position.x, this.position.y);
             this.position.x = targetPosition.x;
             this.position.y = targetPosition.y;
@@ -53,6 +56,6 @@ export class Camera {
     }
 
     private shouldSmooth(): boolean {
-        return this.position.x !== 0 && this.position.y !== 0;
+        return this.initializedCamera;
     }
 }

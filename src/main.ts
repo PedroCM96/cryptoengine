@@ -15,6 +15,7 @@ import {
 import {initInputState, inputDetection, InputState, resetInputState} from "./engine/input";
 import {Character, PlayableCharacter} from "./engine/character";
 import {Position} from "./engine/shared";
+import {Bus, BusMessageType, Message, TeleportMessage} from "./engine/bus";
 
 
 let inputState: InputState|null = null;
@@ -23,10 +24,12 @@ let map: Map|null = null;
 let ui: UI | null = null;
 let global: Global | null = null;
 let ctx: CanvasRenderingContext2D|null = null;
+const bus: Bus = new Bus();
 
 
 // Map is the base when all the game will occur, so all the game will be loaded.
 async function initializeMap(mapId: number, characterPosition: Position | null = null): Promise<void> {
+
     const appContainer = document.getElementById('app') as HTMLElement;
     appContainer.style.width = `${GAME_CANVAS_SIZE[0]}px`;
     appContainer.style.height = `${GAME_CANVAS_SIZE[1]}px`;
@@ -34,16 +37,16 @@ async function initializeMap(mapId: number, characterPosition: Position | null =
     const canvas: HTMLCanvasElement = document.getElementById('game') as HTMLCanvasElement;
     canvas.width = GAME_CANVAS_SIZE[0];
     canvas.height = GAME_CANVAS_SIZE[1];
-
-    // Initialize engine
     ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+
     map = await Map.fromId(mapId, new Image()); // Hardcoded ID 0
     inputState = initInputState(KEYBOARD_INPUT_MAP);
     ui = new UI();
     const characterImg = new Image();
     characterImg.src = CHARACTER_RESOURCE;
     character = new PlayableCharacter(characterImg, characterPosition || map.getInitializeCharacterPosition());
-    global = new Global(ctx, inputState, character as PlayableCharacter, map, ui, document);
+    global = new Global(ctx, inputState, character as PlayableCharacter, map, ui, bus, document);
 
     // UI Adjustments
     const textbox = document.getElementById('textbox') as HTMLElement;
@@ -52,9 +55,11 @@ async function initializeMap(mapId: number, characterPosition: Position | null =
     textbox.style.borderRadius = `${TEXTBOX_BORDER_RADIUS}px`;
     textbox.style.padding = `${TEXTBOX_PADDING}px`;
 }
-// Initializing canvas and game state
+
 document.addEventListener("DOMContentLoaded", async () => {
-    await initializeMap(0);
+    // Initializing canvas
+
+    await initializeMap(0, ctx);
     window.requestAnimationFrame(gameLoop);
 });
 
@@ -98,8 +103,24 @@ let fps;
      }
 
      await process(global as Global);
+     await handleBusMessages();
+
      window.requestAnimationFrame(gameLoop);
  }
 
- window.setTimeout(() => { initializeMap(1)}, 10000)
+ async function handleBusMessages(): void {
+     if (!bus.hasMessages()) {
+         return;
+     }
+
+     const message = bus.next() as Message;
+     const messageType = message[0];
+
+     if(messageType === BusMessageType.TELEPORT) {
+         const data = message[1] as TeleportMessage;
+
+         await initializeMap(data.mapId, data.characterPosition);
+         character?.lookAt(data.characterLookAt);
+     }
+}
 

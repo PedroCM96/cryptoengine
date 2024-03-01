@@ -1,8 +1,9 @@
 import {StubbedInstance, stubConstructor} from "ts-sinon";
 import {Global, UI} from "../../src/engine";
-import {Map} from "../../src/engine/map";
+import {Map} from "../../src/engine";
 import {InputState} from "../../src/engine/input";
 import {Character} from "../../src/engine/character";
+import {Bus} from "../../src/engine/bus";
 
 type GlobalNullableConstructor = {
     /* @ts-ignore*/
@@ -11,6 +12,7 @@ type GlobalNullableConstructor = {
     character?: Character,
     map?: Map,
     ui?: UI,
+    bus?: Bus,
     /* @ts-ignore */
     document?: Document
 }
@@ -22,6 +24,7 @@ export function mockGlobal(args: GlobalNullableConstructor): StubbedInstance<Glo
         args.character,
         args.map,
         args.ui,
+        args.bus,
         args.document
         );
 }

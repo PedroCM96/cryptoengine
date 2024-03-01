@@ -7,10 +7,14 @@
         "showMessage": "La casa está cerrada."
       },
       {
-        "showMessage": "No puedo entrar."
+        "showMessage": "Ah no, parece abierta."
       },
       {
-        "showMessage": "Gay."
+        "teleport": {
+          "mapId": 1,
+          "position": [10,10],
+          "lookingAt": "UP"
+        }
       }
     ],
     "allowMove": false,
