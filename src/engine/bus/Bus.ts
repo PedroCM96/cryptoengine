@@ -1,4 +1,4 @@
-import {Message} from "./Message.ts";
+import {Message} from "./BusMessage.ts";
 
 export class Bus {
     private messages: Message[] = [];

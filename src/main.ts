@@ -59,7 +59,7 @@ async function initializeMap(mapId: number, characterPosition: Position | null =
 document.addEventListener("DOMContentLoaded", async () => {
     // Initializing canvas
 
-    await initializeMap(0, ctx);
+    await initializeMap(0);
     window.requestAnimationFrame(gameLoop);
 });
 
@@ -108,7 +108,7 @@ let fps;
      window.requestAnimationFrame(gameLoop);
  }
 
- async function handleBusMessages(): void {
+ async function handleBusMessages(): Promise<void> {
      if (!bus.hasMessages()) {
          return;
      }

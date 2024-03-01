@@ -23,7 +23,7 @@ export class Teleport extends Action {
         return new Teleport(mapId, characterPosition, lookingAt);
     }
 
-    protected doExecute(global: Global): Promise<void> {
+    protected async doExecute(global: Global): Promise<void> {
         this.start();
         const teleportMessage: TeleportMessage = {
             mapId: this.mapId,
