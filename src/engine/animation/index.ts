@@ -1,2 +1,2 @@
-export * from './AnimationMap.ts';
-export * from './Animable.ts';
+export * from "./AnimationMap.ts";
+export * from "./Animable.ts";

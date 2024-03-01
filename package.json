@@ -9,7 +9,12 @@
     "preview": "vite preview",
     "test": "jest",
     "test-coverage": "jest --collect-coverage",
-    "eslint": "eslint src"
+    "check-linter": "eslint src",
+    "check-format": "prettier --c .",
+    "lint": "eslint --fix src",
+    "format": "prettier --write .",
+    "validate": "yarn check-linter && yarn check-format && yarn test",
+    "fix": "yarn lint && yarn format"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -22,6 +27,7 @@
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "jest-canvas-mock": "^2.5.2",
+    "prettier": "3.2.5",
     "ts-jest": "^29.1.2",
     "ts-sinon": "^2.0.2",
     "typescript": "^5.3.3",

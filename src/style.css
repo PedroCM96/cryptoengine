@@ -93,7 +93,6 @@ button:focus-visible {
   }
 }
 
-
 .textbox-wrapper {
   position: absolute;
   bottom: 0;
@@ -114,7 +113,11 @@ button:focus-visible {
 #fps {
   font-size: 18px;
   position: absolute;
-  text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
+  text-shadow:
+    -1px 0 black,
+    0 2px black,
+    2px 0 black,
+    0 -1px black;
   top: 0;
   left: 20px;
 }
