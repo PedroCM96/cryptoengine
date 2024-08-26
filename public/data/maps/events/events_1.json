@@ -13,5 +13,27 @@
     ],
     "allowMove": false,
     "permanent": true
- }
+ },
+  {
+    "id": 1,
+    "trigger": "INTERACT",
+    "allowMove": false,
+    "permanent": true,
+    "npc": {
+      "resource": "NPC_02.png",
+      "lookingAt": "LEFT",
+      "canMove": true,
+      "lookAtInteract": true,
+      "resetDirectionAfterInteract": true,
+      "isMovable": false
+    },
+    "script": [
+      {
+        "showMessage": "Please, connect your wallet"
+      },
+      {
+        "connectWallet": {}
+      }
+    ]
+  }
 ]

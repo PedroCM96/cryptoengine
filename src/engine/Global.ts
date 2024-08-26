@@ -3,6 +3,7 @@ import { PlayableCharacter } from "./character";
 import { Map } from "./map";
 import { UI } from "./ui";
 import { Bus } from "./bus";
+import { MetaMaskInpageProvider } from "@metamask/providers";
 
 export class Global {
   constructor(
@@ -13,5 +14,6 @@ export class Global {
     public readonly ui: UI,
     public readonly bus: Bus,
     public readonly document: Document,
+    public readonly ethereum: MetaMaskInpageProvider
   ) {}
 }

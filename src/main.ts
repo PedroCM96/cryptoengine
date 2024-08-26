@@ -21,6 +21,7 @@ import {
 import { Character, PlayableCharacter } from "./engine/character";
 import { Position } from "./engine/shared";
 import { Bus, BusMessageType, Message, TeleportMessage } from "./engine/bus";
+import { MetaMaskInpageProvider } from "@metamask/providers";
 
 let inputState: InputState | null = null;
 let character: Character | null = null;
@@ -63,6 +64,7 @@ async function initializeMap(
     ui,
     bus,
     document,
+    (window as any).ethereum as MetaMaskInpageProvider
   );
 
   // UI Adjustments
