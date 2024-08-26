@@ -4,10 +4,10 @@
     "trigger": "COLLISION",
     "script": [
       {
-        "showMessage": "La casa está cerrada."
+        "showMessage": "The door is open"
       },
       {
-        "showMessage": "Ah no, parece abierta."
+        "showMessage": "Let's test teleportation!"
       },
       {
         "teleport": {
@@ -25,7 +25,7 @@
     "trigger": "INTERACT",
     "script": [
       {
-        "showMessage": "Esta casa también está cerrada."
+        "showMessage": "The door is closed"
       }
     ],
     "allowMove": false,
@@ -36,10 +36,10 @@
     "trigger": "INTERACT",
     "script": [
       {
-        "showMessage": "Casa A"
+        "showMessage": "Teleport test"
       },
       {
-        "showMessage": "Prohibido el paso"
+        "showMessage": "The door is open"
       }
     ],
     "allowMove": false,
@@ -50,7 +50,10 @@
     "trigger": "INTERACT",
     "script": [
       {
-        "showMessage": "Prohibido el paso"
+        "showMessage": "Character auto-moving test"
+      },
+      {
+        "showMessage": "DOWN,DOW,LEFT,LEFT,UP,UP"
       },
       {
         "moveCharacter": {
@@ -92,10 +95,10 @@
     },
     "script": [
       {
-        "showMessage": "Hola!"
+        "showMessage": "Welcome to the engine!"
       },
       {
-        "showMessage": "COmo tas!"
+        "showMessage": "I hope to see you here more often"
       }
     ]
   },
@@ -113,7 +116,7 @@
     },
     "script": [
       {
-        "showMessage": "Hola!"
+        "showMessage": "Hello! I'm an NPC"
       }
     ]
   }
