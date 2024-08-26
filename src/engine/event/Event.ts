@@ -63,6 +63,10 @@ export class Event {
     return this.npc;
   }
 
+  hasFinished(): boolean {
+    return this.script.hasFinished() && !this.isPermanent();
+  }
+
   private handleNpcExecution(characterPosition: Position): void {
     const npc = this.getNpc() as NonPlayableCharacter;
     npc.trigger();

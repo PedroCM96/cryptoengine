@@ -42,6 +42,7 @@ export class Map {
 
   render(character: Character, ctx: CanvasRenderingContext2D) {
     this.camera.render(this.img, character, ctx);
+    this.clearFinishedEvents();
     this.renderNpcs(ctx, character.getPosition());
   }
 
@@ -183,6 +184,19 @@ export class Map {
 
     this.data.events.set(positionToString(npc.getPosition()), event);
     this.data.events.delete(positionToString(oldPosition));
+  }
+
+  private clearFinishedEvents(): void {
+    for (const eventKey of this.data.events.keys()) {
+      const e = this.data.events.get(eventKey);
+      if (!e) {
+        continue;
+      }
+
+      if (e.hasFinished()) {
+        this.data.events.delete(eventKey);
+      }
+    }
   }
 
   static getMapDataPath(id: number) {

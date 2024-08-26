@@ -4,6 +4,7 @@ import { Global } from "../Global.ts";
 export class Script {
   private lastActionExecuted: number | null = null;
   private isRunning: boolean = false;
+  private _hasFinished: boolean = false;
 
   constructor(private readonly actions: Array<Action>) {}
 
@@ -12,6 +13,7 @@ export class Script {
     for (let i = 0; i < this.actions.length; i++) {
       const action = this.actions[i];
       if (action.isEnabled) {
+        this._hasFinished = false;
         await action.execute(global);
         if (!action.isEnabled) {
           this.lastActionExecuted = i;
@@ -22,6 +24,7 @@ export class Script {
 
     if (this.lastActionExecuted === this.actions.length - 1) {
       this.isRunning = false;
+      this._hasFinished = true;
     }
   }
 
@@ -40,5 +43,9 @@ export class Script {
 
     this.isRunning = false;
     this.lastActionExecuted = null;
+  }
+
+  hasFinished(): boolean {
+    return this._hasFinished;
   }
 }
