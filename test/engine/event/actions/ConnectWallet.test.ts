@@ -2,16 +2,16 @@ import { ConnectWallet } from "../../../../src/engine/event/actions";
 import { StubbedInstance, stubInterface } from "ts-sinon";
 import { Global } from "../../../../src/engine";
 import { mockGlobal } from "../../mockGlobal";
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import { Web3 } from "../../web3";
 
 describe('Connect Wallet action test', () => {
   const sut = ConnectWallet;
   let global: StubbedInstance<Global>;
-  let ethereum: StubbedInstance<MetaMaskInpageProvider>;
+  let web3: StubbedInstance<Web3>;
 
   beforeEach(() => {
-    ethereum = stubInterface<MetaMaskInpageProvider>();
-    global = mockGlobal({ethereum});
+    web3 = stubInterface<Web3>();
+    global = mockGlobal({web3});
     jest.clearAllMocks();
   });
 
@@ -21,8 +21,6 @@ describe('Connect Wallet action test', () => {
 
   it("Should request for connection to web3 provider", async () => {
     await new sut().execute(global);
-    expect(ethereum.request.callCount).toBe(1);
-    expect(ethereum.request.calledWith({ method: 'eth_requestAccounts' })).toBeTruthy();
-
+    expect(web3.connect.callCount).toBe(1);
   });
 })

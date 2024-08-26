@@ -4,11 +4,11 @@ import { Global } from "../../Global.ts";
 export class ConnectWallet extends Action {
 
   protected async doExecute(global: Global): Promise<void> {
-    if (!global.ethereum) {
+    if (!global.web3) {
       throw new Error('Cannot detect Metamask');
     }
 
-    await global.ethereum.request({ method: 'eth_requestAccounts' });
+    await global.web3.connect();
     this.disable();
     this.finish();
   }

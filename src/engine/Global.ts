@@ -3,7 +3,7 @@ import { PlayableCharacter } from "./character";
 import { Map } from "./map";
 import { UI } from "./ui";
 import { Bus } from "./bus";
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import { Web3 } from "../../test/engine/web3";
 
 export class Global {
   constructor(
@@ -14,6 +14,6 @@ export class Global {
     public readonly ui: UI,
     public readonly bus: Bus,
     public readonly document: Document,
-    public readonly ethereum: MetaMaskInpageProvider
+    public readonly web3: Web3
   ) {}
 }

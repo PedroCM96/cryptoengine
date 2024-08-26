@@ -10,18 +10,14 @@ import {
   TEXTBOX_HEIGHT,
   TEXTBOX_PADDING,
   TEXTBOX_WIDTH,
-  UI,
+  UI
 } from "./engine";
-import {
-  initInputState,
-  inputDetection,
-  InputState,
-  resetInputState,
-} from "./engine/input";
+import { initInputState, inputDetection, InputState, resetInputState } from "./engine/input";
 import { Character, PlayableCharacter } from "./engine/character";
 import { Position } from "./engine/shared";
 import { Bus, BusMessageType, Message, TeleportMessage } from "./engine/bus";
-import { MetaMaskInpageProvider } from "@metamask/providers";
+import { BrowserProvider } from "ethers";
+import { Web3 } from "../test/engine/web3";
 
 let inputState: InputState | null = null;
 let character: Character | null = null;
@@ -56,6 +52,13 @@ async function initializeMap(
     characterImg,
     characterPosition || map.getInitializeCharacterPosition(),
   );
+
+  let web3 = null;
+  if (typeof (window as any).ethereum !== 'undefined') {
+    const provider = new BrowserProvider((window as any).ethereum);
+    web3 = new Web3(provider);
+  }
+
   global = new Global(
     ctx,
     inputState,
@@ -64,7 +67,7 @@ async function initializeMap(
     ui,
     bus,
     document,
-    (window as any).ethereum as MetaMaskInpageProvider
+    web3 as Web3
   );
 
   // UI Adjustments
