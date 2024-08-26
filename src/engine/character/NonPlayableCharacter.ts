@@ -1,20 +1,16 @@
 import { Position } from "../shared";
 import { Character } from "./Character.ts";
 import { Direction } from "../input";
-import {
-  CELL_SIZE,
-  CHARACTER_ANIMATION_MAP,
-  CHARACTER_ANIMATION_SPEED,
-  CHARACTER_SPEED,
-} from "../config.ts";
+import { CELL_SIZE, CHARACTER_ANIMATION_MAP, CHARACTER_ANIMATION_SPEED, CHARACTER_SPEED } from "../config.ts";
 
 export class NonPlayableCharacter extends Character {
   public TICKS_COOLDOWN = 40;
 
   currentRenderPosition: Position | null = null;
-  private lookAtInteract: boolean;
-  private resetDirectionAfterInteract: boolean;
-  private defaultLookingAt: Direction;
+  private readonly lookAtInteract: boolean;
+  private readonly resetDirectionAfterInteract: boolean;
+  private readonly _isMovable: boolean;
+  private readonly defaultLookingAt: Direction;
   private cooldownCounter: number;
   private triggered = false;
 
@@ -25,6 +21,7 @@ export class NonPlayableCharacter extends Character {
     lookingAt: Direction,
     lookAtInteract: boolean,
     resetDirectionAfterInteract: boolean,
+    isMovable: boolean,
   ) {
     super(
       img,
@@ -38,6 +35,7 @@ export class NonPlayableCharacter extends Character {
     this.lookAtInteract = lookAtInteract;
     this.resetDirectionAfterInteract = resetDirectionAfterInteract;
     this.defaultLookingAt = lookingAt;
+    this._isMovable = isMovable;
     this.cooldownCounter = 0;
   }
 
@@ -126,4 +124,9 @@ export class NonPlayableCharacter extends Character {
   hasTriggered(): boolean {
     return this.triggered;
   }
+
+  isMovable(): boolean {
+    return this._isMovable;
+  }
+
 }

@@ -91,7 +91,8 @@
       "lookingAt": "DOWN",
       "canMove": true,
       "lookAtInteract": true,
-      "resetDirectionAfterInteract": true
+      "resetDirectionAfterInteract": true,
+      "isMovable": true
     },
     "script": [
       {
@@ -112,11 +113,31 @@
       "lookingAt": "RIGHT",
       "canMove": true,
       "lookAtInteract": true,
-      "resetDirectionAfterInteract": true
+      "resetDirectionAfterInteract": true,
+      "isMovable": true
     },
     "script": [
       {
         "showMessage": "Hello! I'm an NPC"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "trigger": "INTERACT",
+    "allowMove": false,
+    "permanent": true,
+    "npc": {
+      "resource": "NPC_02.png",
+      "lookingAt": "DOWN",
+      "canMove": true,
+      "lookAtInteract": true,
+      "resetDirectionAfterInteract": true,
+      "isMovable": false
+    },
+    "script": [
+      {
+        "showMessage": "I am an immobile NPC"
       }
     ]
   }

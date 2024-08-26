@@ -148,6 +148,10 @@ export class Map {
     }
 
     const npc = event.getNpc() as NonPlayableCharacter;
+    if (!npc.isMovable()) {
+      return;
+    }
+
     npc.incCooldownCounter();
 
     // Check cooldown to avoid strange issues

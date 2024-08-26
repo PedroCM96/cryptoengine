@@ -87,6 +87,7 @@ describe("Load event from JSON function test", () => {
         canMove: true,
         lookAtInteract: true,
         resetDirectionAfterInteract: true,
+        isMovable: true
       },
     };
 
@@ -96,5 +97,6 @@ describe("Load event from JSON function test", () => {
     expect(result.getNpc()?.isLookingAt(Direction.DOWN)).toBeTruthy();
     expect(result.getNpc()?.shouldLookAtInteract()).toBeTruthy();
     expect(result.getNpc()?.shouldResetLookingAt()).toBeTruthy();
+    expect(result.getNpc()?.isMovable()).toBeTruthy();
   });
 });

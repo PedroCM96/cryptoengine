@@ -36,6 +36,7 @@ export async function loadEventFromJson(data: any): Promise<Event> {
       jsonNpc.lookingAt,
       jsonNpc.lookAtInteract,
       jsonNpc.resetDirectionAfterInteract,
+      jsonNpc.isMovable,
     );
   }
 
