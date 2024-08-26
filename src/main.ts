@@ -18,6 +18,8 @@ import { Position } from "./engine/shared";
 import { Bus, BusMessageType, Message, TeleportMessage } from "./engine/bus";
 import { BrowserProvider } from "ethers";
 import { Web3 } from "../test/engine/web3";
+import { Variable, VariableKey } from "./engine/variable";
+import { MetaMaskInpageProvider } from "@metamask/providers";
 
 let inputState: InputState | null = null;
 let character: Character | null = null;
@@ -26,6 +28,30 @@ let ui: UI | null = null;
 let global: Global | null = null;
 let ctx: CanvasRenderingContext2D | null = null;
 const bus: Bus = new Bus();
+const variables = new Variable();
+
+// Web3 Issues
+let web3: Web3 | null = null;
+if (typeof (window as any).ethereum !== 'undefined') {
+  const provider = new BrowserProvider((window as any).ethereum);
+  web3 = new Web3(provider);
+  web3.isConnected().then(r => {
+    if (r) {
+      web3?.getUserAddress().then((address) => {
+        variables.set(VariableKey.USER_ADDRESS, address)
+      })
+    }
+  });
+
+  ((window as any).ethereum as MetaMaskInpageProvider).on('accountsChanged', (accounts: unknown) => {
+    if ((accounts as string[]).length > 0) {
+      variables.set(VariableKey.USER_ADDRESS, (accounts as string[])[0]);
+      return;
+    }
+
+    variables.set(VariableKey.USER_ADDRESS, null);
+  });
+}
 
 // Map is the base when all the game will occur, so all the game will be loaded.
 async function initializeMap(
@@ -53,12 +79,6 @@ async function initializeMap(
     characterPosition || map.getInitializeCharacterPosition(),
   );
 
-  let web3 = null;
-  if (typeof (window as any).ethereum !== 'undefined') {
-    const provider = new BrowserProvider((window as any).ethereum);
-    web3 = new Web3(provider);
-  }
-
   global = new Global(
     ctx,
     inputState,
@@ -67,7 +87,8 @@ async function initializeMap(
     ui,
     bus,
     document,
-    web3 as Web3
+    web3 as Web3,
+    variables
   );
 
   // UI Adjustments

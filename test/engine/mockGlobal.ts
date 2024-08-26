@@ -4,6 +4,7 @@ import { InputState } from "../../src/engine/input";
 import { Character, PlayableCharacter } from "../../src/engine/character";
 import { Bus } from "../../src/engine/bus";
 import { Web3 } from "./web3";
+import { Variable } from "../../src/engine/variable";
 
 type GlobalNullableConstructor = {
   ctx?: CanvasRenderingContext2D;
@@ -14,6 +15,7 @@ type GlobalNullableConstructor = {
   bus?: Bus;
   document?: Document;
   web3?: Web3;
+  variable?: Variable,
 };
 export function mockGlobal(
   args: GlobalNullableConstructor,
@@ -28,6 +30,7 @@ export function mockGlobal(
     args.ui as UI,
     args.bus as Bus,
     args.document as Document,
-    args.web3 as Web3
+    args.web3 as Web3,
+    args.variable as Variable,
   );
 }
