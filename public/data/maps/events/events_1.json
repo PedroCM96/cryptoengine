@@ -53,5 +53,41 @@
         }
       }
     ]
+  },
+  {
+    "id": 2,
+    "trigger": "INTERACT",
+    "allowMove": false,
+    "permanent": true,
+    "npc": {
+      "resource": "NPC_02.png",
+      "lookingAt": "RIGHT",
+      "canMove": true,
+      "lookAtInteract": true,
+      "resetDirectionAfterInteract": true,
+      "isMovable": false
+    },
+    "script": [
+      {
+        "conditional": {
+          "variable": "USER_ADDRESS",
+          "operator": "DISTINCT",
+          "value": "null",
+          "then": [
+            {
+              "showMessage": "Your address is {{USER_ADDRESS}}"
+            }
+          ],
+          "else": [
+            {
+              "showMessage": "If you connect your wallet, I will be able to tell you the address of the connected wallet."
+            },
+            {
+              "showMessage": "Talk to my partner to connect your wallet."
+            }
+          ]
+        }
+      }
+    ]
   }
 ]

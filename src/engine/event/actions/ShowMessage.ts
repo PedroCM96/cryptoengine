@@ -1,5 +1,6 @@
 import { Global } from "../../Global.ts";
 import { Action } from "../Action";
+import { Interpolator } from "../../shared";
 
 export class ShowMessage extends Action {
   constructor(private readonly message: string) {
@@ -17,7 +18,8 @@ export class ShowMessage extends Action {
   async doExecute(global: Global): Promise<void> {
     this.start();
     global.character.disableMovement();
-    global.ui.openTextBox(this.message);
+    const text = Interpolator.interpolate(this.message, global.variables);
+    global.ui.openTextBox(text);
 
     if (global.inputState.ACCEPT) {
       global.ui.closeTextBox();
