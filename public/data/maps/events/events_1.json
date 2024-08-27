@@ -29,10 +29,18 @@
     },
     "script": [
       {
-        "showMessage": "Please, connect your wallet"
-      },
-      {
-        "connectWallet": {}
+        "conditional": {
+          "variable": "USER_ADDRESS",
+          "operator": "DISTINCT",
+          "value": "null",
+          "then": {
+            "showMessage": "Please, connect your wallet",
+            "connectWallet": {}
+          },
+          "else": {
+            "showMessage": "You're connected!"
+          }
+        }
       }
     ]
   }
