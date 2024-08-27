@@ -13,7 +13,7 @@ export class ConnectWallet extends Action {
     this.finish();
   }
 
-  static load(): Action {
+  static async load(): Promise<Action> {
     return new ConnectWallet();
   }
 }

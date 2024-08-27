@@ -15,8 +15,9 @@ describe('Connect Wallet action test', () => {
     jest.clearAllMocks();
   });
 
-  it("Should load correctly the action without any argument", () => {
-    expect(sut.load()).toBeInstanceOf(ConnectWallet);
+  it("Should load correctly the action without any argument", async () => {
+    const instance = await sut.load();
+    expect(instance).toBeInstanceOf(ConnectWallet);
   });
 
   it("Should request for connection to web3 provider", async () => {

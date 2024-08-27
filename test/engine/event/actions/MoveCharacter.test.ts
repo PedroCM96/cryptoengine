@@ -17,19 +17,19 @@ describe("Move Character action test", () => {
   });
 
   it("Should fail load function is there is no movement key", () => {
-    expect(() => sut.load({})).toThrow();
+    expect(async () => await sut.load({})).rejects.toThrow();
   });
 
   it("Should fail load function if movement key is not an array", () => {
-    expect(() => sut.load({ movements: "foo" })).toThrow();
+    expect(async () => await sut.load({ movements: "foo" })).rejects.toThrow();
   });
 
   it("Should fail load function if movement key is an empty array", () => {
-    expect(() => sut.load({ movements: [] })).toThrow();
+    expect(async () => await sut.load({ movements: [] })).rejects.toThrow();
   });
 
-  it("Should return a valid instance", () => {
-    const instance = sut.load({ movements: [Direction.DOWN] });
+  it("Should return a valid instance", async () => {
+    const instance = await sut.load({ movements: [Direction.DOWN] });
     expect(instance instanceof MoveCharacter).toBeTruthy();
   });
 

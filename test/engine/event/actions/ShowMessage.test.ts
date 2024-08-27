@@ -29,11 +29,11 @@ describe("Show Message action test", () => {
   });
 
   it("Should fail load function if data type is not string", () => {
-    expect(() => sut.load({})).toThrow();
+    expect(async () => await sut.load({})).rejects.toThrow();
   });
 
-  it("Should return a valid instance", () => {
-    const instance = sut.load(message);
+  it("Should return a valid instance", async () => {
+    const instance = await sut.load(message);
     expect(instance.constructor.name).toBe("ShowMessage");
   });
 

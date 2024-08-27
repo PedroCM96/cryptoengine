@@ -19,10 +19,11 @@ export abstract class Action {
     if (!this.isExecuting) {
       resetInputState(global.inputState);
     }
+    
     await this.doExecute(global);
   }
 
-  static load(data: any): Action {
+  static async load(data: any): Promise<Action> {
     throw new Error(`Should override this method! ${data}`);
   }
 

@@ -12,5 +12,5 @@ export async function loadAction(
   }
 
   const classModule = await import(`../actions/${className}.ts`);
-  return classModule[className].load(actionData);
+  return await classModule[className].load(actionData);
 }

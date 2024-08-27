@@ -25,7 +25,7 @@ export class MoveCharacter extends Action {
     }
   }
 
-  static load(data: any): Action {
+  static async load(data: any): Promise<Action> {
     const movements = data.movements;
     if (!movements) {
       throw new Error(

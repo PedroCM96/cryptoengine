@@ -6,7 +6,7 @@ export class ShowMessage extends Action {
     super();
   }
 
-  static load(data: any): Action {
+  static async load(data: any): Promise<Action> {
     if (typeof data !== "string") {
       throw new Error("ShowMessage load method should receive an string");
     }
