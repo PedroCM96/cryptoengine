@@ -13,7 +13,7 @@ export class Teleport extends Action {
     super();
   }
 
-  static load(data: any) {
+  static async load(data: any) {
     const mapId = parseInt(data.mapId);
     const characterPosition: Position = {
       x: data.position[0],

@@ -16,14 +16,14 @@ describe("Teleport action test", () => {
     global = mockGlobal({ bus });
   });
 
-  it("Should return a valid instance", () => {
+  it("Should return a valid instance", async () => {
     const data = {
       mapId: 1,
       position: [10, 10],
       lookingAt: "UP",
     };
 
-    const instance = sut.load(data);
+    const instance = await sut.load(data);
     /* @ts-expect-error ignore */
     expect(instance.mapId).toBe(1);
     /* @ts-expect-error ignore */
