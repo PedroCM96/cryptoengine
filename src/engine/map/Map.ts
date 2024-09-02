@@ -44,6 +44,7 @@ export class Map {
     this.camera.render(this.img, character, ctx);
     this.clearFinishedEvents();
     this.renderNpcs(ctx, character.getPosition());
+    this.renderFurniture(ctx, character.getPosition());
   }
 
   willCollide(position: Position): boolean {
@@ -130,6 +131,15 @@ export class Map {
         this.handleNpcMovement(e, referencePosition);
       } else {
         npc.resetRenderPosition();
+      }
+    }
+  }
+
+  private renderFurniture(ctx: CanvasRenderingContext2D, referencePosition: Position): void {
+    for (const [strPosition, furniture] of this.data.furnitures.entries()) {
+      const position = positionFromString(strPosition);
+      if (this.camera.isVisible(position, referencePosition)) {
+        furniture.render(ctx, position, this.camera.getTopLeftCornerCellPosition(referencePosition))
       }
     }
   }

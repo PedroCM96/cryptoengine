@@ -1,5 +1,6 @@
 import { MapData } from "../MapData.ts";
 import { loadMapEvents } from "./loadMapEvents.ts";
+import { Furniture } from "../../../../test/engine/furniture/Furniture.ts";
 
 export async function loadDataFromJson(
   id: number,
@@ -21,5 +22,10 @@ export async function loadDataFromJson(
       x: jsonData.initializeCharacterPosition[0],
       y: jsonData.initializeCharacterPosition[1],
     },
+    furnitures: new Map<string, Furniture>([
+      [
+        '9,13', new Furniture('cut_down_tree', 'Cut down tree', false, [1,1])
+      ]
+    ]),
   };
 }
