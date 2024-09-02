@@ -28,7 +28,7 @@ describe("Show Message action test", () => {
     global = mockGlobal({ inputState, character, ui });
   });
 
-  it("Should fail load function if data type is not string", () => {
+  it("Should fail load function if data affinity is not string", () => {
     expect(async () => await sut.load({})).rejects.toThrow();
   });
 
