@@ -136,7 +136,7 @@ export class Map {
   }
 
   private renderFurniture(ctx: CanvasRenderingContext2D, referencePosition: Position): void {
-    for (const [strPosition, furniture] of this.data.furnitures.entries()) {
+    for (const [strPosition, furniture] of this.data.furniture.entries()) {
       const position = positionFromString(strPosition);
       if (this.camera.isVisible(position, referencePosition)) {
         furniture.render(ctx, position, this.camera.getTopLeftCornerCellPosition(referencePosition))

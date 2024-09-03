@@ -1,6 +1,6 @@
 {
   "id": 1,
   "name": "Cut down tree",
-  "size": [1, 1],
+  "size": [2, 2],
   "walkable": false
 }

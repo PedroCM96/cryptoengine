@@ -7,5 +7,5 @@ export type MapData = {
   collisions: [number, number][];
   events: Map<string, Event>; // String represents position in "X,Y" format
   initializeCharacterPosition: Position;
-  furnitures: Map<string, Furniture> // String represents position in "X,Y" format
+  furniture: Map<string, Furniture> // String represents position in "X,Y" format
 };
