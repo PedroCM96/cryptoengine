@@ -1,16 +1,6 @@
-import {
-  MAP_DATA_FOLDER,
-  MAP_RESOURCE_EXTENSION,
-  MAP_RESOURCE_PREFIX,
-  MAPA_EVENTS_FOLDER,
-} from "../config.ts";
+import { MAP_DATA_FOLDER, MAP_RESOURCE_EXTENSION, MAP_RESOURCE_PREFIX, MAPA_EVENTS_FOLDER } from "../config.ts";
 import { MapData } from "./MapData.ts";
-import {
-  isEqual,
-  Position,
-  positionFromString,
-  positionToString,
-} from "../shared";
+import { isEqual, Position, positionFromString, positionToString } from "../shared";
 import { loadDataFromJson } from "./functions/loadDataFromJson.ts";
 import { Event, Trigger } from "../event";
 import { Camera } from "./camera";
