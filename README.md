@@ -2,6 +2,7 @@
 
 Welcome to the very first RPG Games engine fully oriented to crypto world!
 
+![Game preview](gif.gif)
 ## DOCS
 
 - [Global Config](./src/engine/config.md);
